@@ -54,7 +54,7 @@ session_start(); ?>
         WHERE per.id_personne=pra.id_personne AND s.id_sport=pra.id_sport AND s.design=:design
         AND pra.niveau=:niveau');
         $reponse->execute(array('design'=>$_POST['sport'],'niveau'=>$_POST['niveau']));
-        $donnees=$reponse->fetchAll();
+        $donnees=$reponse->fetchAll(PDO::FETCH_ASSOC);
         $key=array_keys($donnees)                           
         ?>   
         <p>
@@ -62,19 +62,24 @@ session_start(); ?>
                 <tr>
                 <?php 
 
-                if(isset($_POST['sport']) AND isset($_POST['niveau'])){
-                foreach($key as $cle){
-                    echo "<th>$cle</th>";
-                }
+            if($reponse->rowCount()==0){
+                echo"<p> Il n' y a pas de resultats qui correspond a votre recherche </p>";
+            }
+
+            
+                else{
+               
+                    echo "<th>Nom</th><th>Prenom</th><th>Niveau</th><th>Design</th>";
+                
                 ?>                    
                 </tr>
                 <?php 
-                foreach($donnees as $cle=>$valeur ){
-                    echo"<tr><td>$valeur</></tr>";
+                foreach($donnees as $cle ){
+                    echo"<tr><td>".$cle['nom']."</td>
+                    <td>".$cle['prenom']."</td>
+                    <td>".$cle['niveau']."</td>
+                    <td>".$cle['design']."</td></tr>";
                 }
-            }
-            if($reponse->rowCount()==0){
-                echo"<p> Il n' y a pas de resultats qui correspond a votre recherche </p>";
             }
                 ?>
                 
