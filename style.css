@@ -1,0 +1,10 @@
+body{background-color: bisque;}
+#deconnexion{appearance: button;}
+[type="submit"]{position:relative; background-color: aquamarine; border-radius: 8px;}
+[type]{margin-top: 1em; margin-left: 1em;} 
+tr{margin-top:0.6em;vector-effect: top;}
+table{}
+form{width: 65%;}
+select{margin:3px;}
+
+[type="submit"]:active{top:3px;left: 1px;}

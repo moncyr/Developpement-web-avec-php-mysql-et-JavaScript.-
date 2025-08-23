@@ -7,10 +7,10 @@ $req1 = $bdd->prepare(
     'INSERT INTO Personne (prenom, nom, email, depart) VALUES (:prenom, :nom, :email, :depart)'
 );
 $req1->execute([
-    'prenom' => $_POST['prenom'], 
-    'nom'    => $_POST['nom'], 
-    'email'  => $_POST['email'], 
-    'depart' => $_POST['date']
+    'prenom' =>htmlspecialchars($_POST['prenom']), 
+    'nom'    => htmlspecialchars($_POST['nom']), 
+    'email'  => htmlspecialchars($_POST['email']), 
+    'depart' => htmlspecialchars($_POST['date'])
 ]);
 
 $id_personne = $bdd->lastInsertId();
@@ -21,11 +21,11 @@ $id_sport = null;
 if (!empty($_POST['ajouter'])) {
     // Nouveau sport
     $req3 = $bdd->prepare('INSERT INTO sport (design) VALUES (:design)');
-    $req3->execute(['design' => $_POST['ajouter']]);
+    $req3->execute(['design' => htmlspecialchars($_POST['ajouter'])]);
     $id_sport = $bdd->lastInsertId();
-} elseif (!empty($_POST['sport'])) {
+} elseif (!empty(htmlspecialchars($_POST['sport']))) {
     $req3 = $bdd->prepare('INSERT INTO sport (design) VALUES (:design)');
-    $req3->execute(['design' => $_POST['sport']]);
+    $req3->execute(['design' => htmlspecialchars($_POST['sport'])]);
            
     $id_sport = $bdd->lastInsertId();
     
@@ -42,7 +42,7 @@ $req2 = $bdd->prepare(
 $req2->execute([
     'id_personne' => $id_personne,
     'id_sport'    => $id_sport,
-    'niveau'      => $_POST['niveau']
+    'niveau'      => htmlspecialchars($_POST['niveau'])
 ]);
 
 // 4. Redirection

@@ -7,9 +7,10 @@
     <head>
         <title>Acceuil</title>
         <div id="header"><?php include('header.php'); ?></div>
-    <style>
+        <link rel="stylesheet" href="style.css">
+    <style >
      ul{min-width:50%; height: 10em;  display:grid; 
-        grid-template-columns: repeat(5, 1fr); margin-right: 3em;
+        grid-template-columns: repeat(5, 1fr); margin-right: 3em; margin-bottom:3em;        
     }
      div{margin-left: 1em;} 
      input{margin: 1em;}
@@ -47,7 +48,9 @@
         <p> <h2> Bienvenue <?php echo $_SESSION['prenom'].' '.$_SESSION['nom']."</h1>"?></p>
         <?php
         echo "<p><a href=\"ajout.php\"> Enregistrement un nouveau sport </a></p>";
-        echo "<p><a href=\"recherche.php\"> Effectuer une Recherche  </a></p>";?>
+        echo "<p><a href=\"recherche.php\"> Effectuer une Recherche  </a></p>";
+        echo "<p><a id=deconnexion href=deconnexion.php> Deconnexion </a></p> " ?>
+        
         <!--<style>form{visibility:hidden;} </style>   --> 
         <?php    
     }

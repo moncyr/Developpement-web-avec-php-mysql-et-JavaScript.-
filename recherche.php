@@ -4,19 +4,22 @@ session_start(); ?>
 <html>
     <head>
     <?php include_once('header.php') ?>
+     <link rel="stylesheet" href="style.css"/>
     <style>
         th{text-align: left;}
+        table{width: 50%;}
     </style>
     </head>
     <body>
        <div>
+        <p><h2>Page de Recherche</h2></p>
         <form method="post" action="recherche.php">
             <fieldset>
                 <legend> Recherche Des Partenaires</legend>
                 <table>
                     <tr>
                         <th>Sport Pratique : </th><td>
-                            <select name="sport" >
+                            <select name="sport">
                                 <?php 
                                 $sport=$_SESSION['sport'];                                         
                                 foreach($sport as $cle){
@@ -53,9 +56,9 @@ session_start(); ?>
         $reponse=$bdd->prepare('SELECT nom, prenom, niveau, design FROM personne per, sport s,pratique pra
         WHERE per.id_personne=pra.id_personne AND s.id_sport=pra.id_sport AND s.design=:design
         AND pra.niveau=:niveau');
-        $reponse->execute(array('design'=>$_POST['sport'],'niveau'=>$_POST['niveau']));
+        $reponse->execute(array('design'=>htmlspecialchars($_POST['sport']),'niveau'=>htmlspecialchars($_POST['niveau'])));
         $donnees=$reponse->fetchAll(PDO::FETCH_ASSOC);
-        $key=array_keys($donnees)                           
+                                 
         ?>   
         <p>
             <table>
@@ -65,13 +68,16 @@ session_start(); ?>
             if($reponse->rowCount()==0){
                 echo"<p> Il n' y a pas de resultats qui correspond a votre recherche </p>";
             }
+                                 
+            else{
+                     $key=array_keys($donnees[0]) ;               
+                    echo "<tr id=head style=text-transform:capitalize;>";
+                    foreach($key as $cle){
+                    echo "<th>$cle</th>";
+                    }
+                    echo "</tr>"
+                ?>
 
-            
-                else{
-               
-                    echo "<th>Nom</th><th>Prenom</th><th>Niveau</th><th>Design</th>";
-                
-                ?>                    
                 </tr>
                 <?php 
                 foreach($donnees as $cle ){
@@ -85,6 +91,10 @@ session_start(); ?>
                 
             </table>
         </p>                         
-       </div>                            
+       </div>
+       <p>
+        <a href="index.php" style="font-size: large;font-weight: bold; ">Acceuil</a>
+        
+       </p>                            
     </body>
 </html>
